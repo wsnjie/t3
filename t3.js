@@ -5,15 +5,18 @@ class Space {
         this.id = id
         this.mark = ""
     }
-    markSpace(player) {
-        this.mark = player
-        console.log("clicked" + this.id)
+    markSpace() {
+        this.mark = gameBoard.player
+        document.querySelector("#space" + this.id).innerText = this.mark
+        gameBoard.turn >= 3 ? gameBoard.winCheck() : null
+        gameBoard.turn++
+        gameBoard.swapPlayer()
     }
 }
 
 const gameBoard = {
-    player: 0,
-    turn: 0,
+    player: "O",
+    turn: 1,
     spaces: {
         row0: [],
         row1: [],
@@ -30,7 +33,7 @@ const gameBoard = {
             let tempSpace = new Space(rowNum + `${i}`)
             let clear = function () { }
             const mark = function () {
-                tempSpace.markSpace(this.player)
+                tempSpace.markSpace()
                 clear()
             }
             //assigns a function to clear that runs after the listner is triggered and removes the listener so space can only be clicked once.
@@ -40,6 +43,33 @@ const gameBoard = {
             document.querySelector("#space" + tempSpace.id).addEventListener("click", mark, true)
             this.spaces["row" + rowNum].push(tempSpace)
 
+        }
+    },
+    swapPlayer: function () {
+        this.player === "O" ? this.player = "X" : this.player = "O"
+    },
+    winCheck: function () {
+        this.rowCheck("row0")
+        this.rowCheck("row1")
+        this.rowCheck("row2")
+        this.colCheck(0)
+        this.colCheck(1)
+        this.colCheck(2)
+    },
+    rowCheck: function (row) {
+        if (this.spaces[row][0].mark === this.spaces[row][1].mark && this.spaces[row][1].mark === this.spaces[row][2].mark) {
+            if (this.spaces[row][0].mark === "" || this.spaces[row][1].mark === "" || this.spaces[row][2].mark === "") {
+                return
+            }
+            console.log("Player " + this.spaces[row][0].mark + " wins!")
+        }
+    },
+    colCheck: function (space) {
+        if (this.spaces.row0[space].mark === this.spaces.row1[space].mark && this.spaces.row1[space].mark === this.spaces.row2[space].mark) {
+            if (this.spaces.row0[space].mark === "" || this.spaces.row1[space].mark === "" || this.spaces.row2[space].mark === "") {
+                return
+            }
+            console.log("Player " + this.spaces.row0[space].mark + " wins!")
         }
     }
 }
