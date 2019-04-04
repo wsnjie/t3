@@ -55,6 +55,7 @@ const gameBoard = {
         this.colCheck(0)
         this.colCheck(1)
         this.colCheck(2)
+        this.diagCheck()
     },
     rowCheck: function (row) {
         if (this.spaces[row][0].mark === this.spaces[row][1].mark && this.spaces[row][1].mark === this.spaces[row][2].mark) {
@@ -70,6 +71,20 @@ const gameBoard = {
                 return
             }
             console.log("Player " + this.spaces.row0[space].mark + " wins!")
+        }
+    },
+    diagCheck: function () {
+        if (this.spaces.row0[0].mark === this.spaces.row1[1].mark && this.spaces.row1[1].mark === this.spaces.row2[2].mark) {
+            if (this.spaces.row0[0].mark === "" || this.spaces.row1[1].mark === "" || this.spaces.row2[2].mark === "") {
+                return
+            }
+            console.log("Player " + this.spaces.row0[0].mark + " wins!")
+        }
+        if (this.spaces.row2[0].mark === this.spaces.row1[1].mark && this.spaces.row1[1].mark === this.spaces.row0[2].mark) {
+            if (this.spaces.row2[0].mark === "" || this.spaces.row1[1].mark === "" || this.spaces.row0[2].mark === "") {
+                return
+            }
+            console.log("Player " + this.spaces.row2[0].mark + " wins!")
         }
     }
 }
