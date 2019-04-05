@@ -10,19 +10,21 @@ class Space {
         document.querySelector("#space" + this.id).innerText = this.mark
         gameBoard.turn >= 3 ? gameBoard.winCheck() : null
         gameBoard.turn++
-        gameBoard.swapPlayer()
         gameBoard.drawCheck()
+        let swapCheck = document.querySelector("#nowPlaying").innerText
+        swapCheck !== "" ? gameBoard.swapPlayer() : null
     }
 }
 
 const gameBoard = {
-    player: "O",
+    player: "X",
     turn: 1,
     spaces: {
         row0: [],
         row1: [],
         row2: []
     },
+    cleanBoard: {},
     makeBoard: function () {
         this.makeRow("0")
         this.makeRow("1")
@@ -93,14 +95,40 @@ const gameBoard = {
     victory: function (winner) {
         document.querySelector("#nowPlaying").innerText = ""
         document.querySelector("#winner").innerText = `Congratulations! ${winner}'s Win!`
+        this.toggleReset()
     },
     drawCheck: function () {
         winner = document.querySelector("#winner").innerText
         if (winner === "" && this.turn > 9) {
             document.querySelector("#nowPlaying").innerText = ""
             document.querySelector("#winner").innerText = "You are evenly matched! It's a draw."
+            this.toggleReset()
         }
+    },
+    toggleReset: function () {
+        document.querySelector("#reset").setAttribute("style", "display: flex")
+        document.querySelector("#reset").addEventListener("click", this.reset)
+
+    },
+    reset: function () {
+        gameBoard.spaces = {
+            row0: [],
+            row1: [],
+            row2: []
+        }
+        gameBoard.player = "X"
+        gameBoard.turn = 1
+        document.querySelector("#nowPlaying").innerHTML = "Player <span id=active class=statText></span>'s Turn"
+        document.querySelector("#winner").innerText = ""
+        let main = document.querySelector("main")
+        main.removeChild(main.childNodes[1])
+        main.insertBefore(gameBoard.cleanBoard, main.childNodes[1])
+        gameBoard.makeBoard()
+        document.querySelector("#reset").setAttribute("style", "display: none")
+    },
+    getCleanboard: function () {
+        gameBoard.cleanBoard = document.querySelector("#gameboard").cloneNode(true)
     }
 }
-
+gameBoard.getCleanboard()
 gameBoard.makeBoard()
