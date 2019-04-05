@@ -11,6 +11,7 @@ class Space {
         gameBoard.turn >= 3 ? gameBoard.winCheck() : null
         gameBoard.turn++
         gameBoard.swapPlayer()
+        gameBoard.drawCheck()
     }
 }
 
@@ -26,6 +27,7 @@ const gameBoard = {
         this.makeRow("0")
         this.makeRow("1")
         this.makeRow("2")
+        document.querySelector("#active").innerText = this.player
     },
     makeRow: function (rowNum) {
         for (let i = 1; i < 4; i++) {
@@ -47,6 +49,7 @@ const gameBoard = {
     },
     swapPlayer: function () {
         this.player === "O" ? this.player = "X" : this.player = "O"
+        document.querySelector("#active").innerText = this.player
     },
     winCheck: function () {
         this.rowCheck("row0")
@@ -62,7 +65,7 @@ const gameBoard = {
             if (this.spaces[row][0].mark === "" || this.spaces[row][1].mark === "" || this.spaces[row][2].mark === "") {
                 return
             }
-            console.log("Player " + this.spaces[row][0].mark + " wins!")
+            this.victory(this.spaces[row][0].mark)
         }
     },
     colCheck: function (space) {
@@ -70,7 +73,7 @@ const gameBoard = {
             if (this.spaces.row0[space].mark === "" || this.spaces.row1[space].mark === "" || this.spaces.row2[space].mark === "") {
                 return
             }
-            console.log("Player " + this.spaces.row0[space].mark + " wins!")
+            this.victory(this.spaces.row0[space].mark)
         }
     },
     diagCheck: function () {
@@ -78,13 +81,24 @@ const gameBoard = {
             if (this.spaces.row0[0].mark === "" || this.spaces.row1[1].mark === "" || this.spaces.row2[2].mark === "") {
                 return
             }
-            console.log("Player " + this.spaces.row0[0].mark + " wins!")
+            this.victory(this.spaces.row0[0].mark)
         }
         if (this.spaces.row2[0].mark === this.spaces.row1[1].mark && this.spaces.row1[1].mark === this.spaces.row0[2].mark) {
             if (this.spaces.row2[0].mark === "" || this.spaces.row1[1].mark === "" || this.spaces.row0[2].mark === "") {
                 return
             }
-            console.log("Player " + this.spaces.row2[0].mark + " wins!")
+            this.victory(this.spaces.row2[0].mark)
+        }
+    },
+    victory: function (winner) {
+        document.querySelector("#nowPlaying").innerText = ""
+        document.querySelector("#winner").innerText = `Congratulations! ${winner}'s Win!`
+    },
+    drawCheck: function () {
+        winner = document.querySelector("#winner").innerText
+        if (winner === "" && this.turn > 9) {
+            document.querySelector("#nowPlaying").innerText = ""
+            document.querySelector("#winner").innerText = "You are evenly matched! It's a draw."
         }
     }
 }
