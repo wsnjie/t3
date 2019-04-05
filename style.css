@@ -1,6 +1,10 @@
 body{
     height: 100vh;
     width: 100vw;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    background: linear-gradient(#FCC5A1, #DDE2DC);
+    color: #3581B8;
+
 }
 h1{
     text-align: center;
@@ -15,7 +19,7 @@ h1{
 }
 
 .space {
-    border: 1px black solid;
+    border: 1px #3581B8 solid;
     height: 100px;
     width: 100px;
     font-size: 70px;
@@ -24,6 +28,7 @@ h1{
     display: flex;
     justify-content: center;
     align-items: center;
+    color: #068D9D;
 }
 
 main {
@@ -54,6 +59,9 @@ main {
 
 #reset{
     display: none;
+    background-color: #CD533B;
+    color: #DDE2DC;
+
 }
 
 @media only screen and (max-width: 550px) {
