@@ -1,5 +1,6 @@
 Overview
 ============
+Link to Github Pages deployment: [Here!](https://wsnjie.github.io/t3/)
 
 T3 (or "T"ic "T"ac "T"oe) is a JavaScript represantation of the game Tic Tac Toe. This project is written with vanilla JS, no additional libraries or frameworks. It was written as a coding challenge that I started on Wednesday evening and submitted Friday morning. I focused on making sure the game fuctionality was sound first, and then added UI elements to make it easy for the players to enjoy the game.
 
